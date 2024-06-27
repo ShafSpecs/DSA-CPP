@@ -13,7 +13,7 @@ int main() {
     cout << "Number at index 0 is supposed to be 4: " << v[0] << endl;
 
     const auto v_ptr =  new Vector(2);
-    // Vector* v_ptr = &v;
+    // Vector* v_ptr = &v;  // causes code 134 and a broken program?
     v_ptr->operator[](0) = 1;
 
     *v_ptr = v;

@@ -40,6 +40,14 @@ int Vector::size() const {
     return this->sz;
 }
 
+int* Vector::begin() const {
+    return this->data.get();
+}
+
+int* Vector::end() const {
+    return this->data.get() + this->sz;
+}
+
 int &Vector::operator[](const int index) {
     return this->data[index];
 }
@@ -66,5 +74,3 @@ Vector &Vector::operator=(Vector&& other) noexcept {
     }
     return *this;
 }
-
-

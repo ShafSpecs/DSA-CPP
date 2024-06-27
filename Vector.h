@@ -19,6 +19,8 @@ public:
     Vector(Vector&& other) noexcept;
 
     [[nodiscard]] int size() const;
+    int* begin() const;
+    int* end() const;
 
     // Provide support for Vector[]
     int& operator[](int index);
