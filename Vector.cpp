@@ -74,3 +74,31 @@ Vector &Vector::operator=(Vector&& other) noexcept {
     }
     return *this;
 }
+
+bool Vector::operator==(const Vector &v1, const Vector &v2) const {
+    if (v1.size() != v2.size()) {
+        return false;
+    }
+
+    for (int i = 0; i < v1.size(); ++i) {
+        if (v1[i] != v2[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool Vector::operator!=(const Vector &v1, const Vector &v2) const {
+    if (v1.size() != v2.size()) {
+        return true;
+    }
+
+    for (int i = 0; i < v1.size(); ++i) {
+        if (v1[i] != v2[i]) {
+            return true;
+        }
+    }
+
+    return false;
+}

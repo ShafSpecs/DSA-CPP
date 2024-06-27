@@ -30,6 +30,8 @@ public:
     Vector& operator=(const Vector& other);
     // move assignment
     Vector& operator=(Vector&& other) noexcept;
+    bool operator==(const Vector& v1, const Vector& v2) const;
+    bool operator!=(const Vector& v1, const Vector& v2) const;
 private:
     int sz{};
     std::unique_ptr<int[]> data{};
