@@ -8,22 +8,15 @@ int main() {
     // Vector init = {0};  // works!
 
     v[0] = 4;
+    v[3] = 5;
 
-    cout << "Size of vector v: " << v.size() << endl;
-    cout << "Number at index 0 is supposed to be 4: " << v[0] << endl;
-
-    const auto v_ptr =  new Vector(2);
-    // Vector* v_ptr = &v;  // causes code 134 and a broken program?
-    v_ptr->operator[](0) = 1;
-
-    *v_ptr = v;
-
-    cout << "Number at first position is supposed to be 4 now (copied): " << v_ptr->operator[](0) << endl;
-    cout << "Memory address of the data should be: " << v_ptr << endl;
-
-    cout << "Number at index 0 in vector v is now: " << v[1];
-
-    delete v_ptr;
+    cout << "Vector 'v' initialised all elements to 0, and we were able to "
+            "override the first and fourth elements to 4 and 5 respectively" << endl;
+    cout << "1. v[0] = " << v[0] << endl;
+    cout << "2. v[1] = " << v[1] << endl;
+    cout << "3. v[2] = " << v[2] << endl;
+    cout << "4. v[3] = " << v[3] << endl;
+    cout << "5. v[4] = " << v[4] << endl;
 
     return 0;
 }
