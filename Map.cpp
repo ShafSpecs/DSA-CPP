@@ -83,3 +83,20 @@ void Map<T, U>::erase(T key) {
 
     this->_sz -= 1;
 }
+
+template<class T, class U>
+bool Map<T, U>::operator==(const Map& other) const {
+    if (this->_sz != other._sz) return false;
+
+    const auto this_map_keys = this->keys.get();
+    const auto this_map_values = this->values.get();
+    const auto other_map_keys = other.keys.get();
+    const auto other_map_values = other.values.get();
+
+    for (int i = 0; i < _sz; ++i) {
+        if (this_map_keys[i] != other_map_keys[i]) return false;
+        if (this_map_values[i] != other_map_values[i]) return  false;
+    }
+
+    return true;
+}

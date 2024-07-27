@@ -57,4 +57,14 @@ namespace {
 
         ASSERT_EQ(map.size(), 2) << "Successful erasure removes the associated key-value pair";
     }
+
+    TEST(Map, MapOperators) {
+        Map<int, char> a = {{1, 's'}, {2, 'x'}, {7, 'p'}};
+        Map<int, char> b = {{1, 's'}, {2, 'x'}, {7, 'p'}};
+        Map<int, char> c = {};
+
+        ASSERT_EQ(a, b);
+
+        // Test still unfinished...
+    }
 } // namespace

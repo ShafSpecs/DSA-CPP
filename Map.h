@@ -15,6 +15,11 @@ public:
     void erase(T key);
     [[nodiscard]] bool empty() const;
     void clear();
+
+    U& operator[](T key);
+    const U& operator[](T key) const;
+    bool operator==(const Map& other) const;
+    bool operator!=(const Map& other) const;
 private:
     int _sz{};
     // Ig, I could have used a pair here...
