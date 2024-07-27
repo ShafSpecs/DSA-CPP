@@ -14,7 +14,9 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(DSA main.cpp
         Vector.cpp
-        Vector.h)
+        Vector.h
+        Map.cpp
+        Map.h)
 
 enable_testing()
 
@@ -23,6 +25,9 @@ add_executable(
         vector_test.cpp
         Vector.cpp
         Vector.h
+        Map.cpp
+        Map.h
+        map_test.cpp
 )
 target_link_libraries(
         vector_test
