@@ -22,7 +22,7 @@ public:
     [[nodiscard]] int* begin() const;
     [[nodiscard]] int* end() const;
 
-    // Provide support for Vector[]
+    // Provide (mutable) support for Vector[]
     int& operator[](int index);
     // `const` support - provide immutable reference
     const int& operator[](int index) const;
@@ -30,8 +30,8 @@ public:
     Vector& operator=(const Vector& other);
     // move assignment
     Vector& operator=(Vector&& other) noexcept;
-    bool operator==(const Vector& v1, const Vector& v2) const;
-    bool operator!=(const Vector& v1, const Vector& v2) const;
+    bool operator==(const Vector& other) const;
+    bool operator!=(const Vector& other) const;
 private:
     int sz{};
     std::unique_ptr<int[]> data{};

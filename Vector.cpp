@@ -45,7 +45,7 @@ int* Vector::begin() const {
 }
 
 int* Vector::end() const {
-    return this->data.get() + this->sz;
+    return this->data.get() + (this->sz - 1);
 }
 
 int &Vector::operator[](const int index) {
@@ -75,13 +75,13 @@ Vector &Vector::operator=(Vector&& other) noexcept {
     return *this;
 }
 
-bool Vector::operator==(const Vector &v1, const Vector &v2) const {
-    if (v1.size() != v2.size()) {
+bool Vector::operator==(const Vector &other) const {
+    if (this->size() != other.size()) {
         return false;
     }
 
-    for (int i = 0; i < v1.size(); ++i) {
-        if (v1[i] != v2[i]) {
+    for (int i = 0; i < this->size(); ++i) {
+        if (this->operator[](i) != other[i]) {
             return false;
         }
     }
@@ -89,13 +89,13 @@ bool Vector::operator==(const Vector &v1, const Vector &v2) const {
     return true;
 }
 
-bool Vector::operator!=(const Vector &v1, const Vector &v2) const {
-    if (v1.size() != v2.size()) {
+bool Vector::operator!=(const Vector &other) const {
+    if (this->size() != other.size()) {
         return true;
     }
 
-    for (int i = 0; i < v1.size(); ++i) {
-        if (v1[i] != v2[i]) {
+    for (int i = 0; i < this->size(); ++i) {
+        if (this->operator[](i) != other[i]) {
             return true;
         }
     }
