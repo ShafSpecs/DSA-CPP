@@ -3,6 +3,12 @@
 
 #include <memory>
 
+// This would do for now.
+//
+// Later on, we add feature like reversing,
+// reserving, pushback, pop, shift and unshift,
+// capacity, etc.
+// Ensure test cases for those as well!
 
 template<class T>
 class Vector {
