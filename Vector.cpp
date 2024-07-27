@@ -13,7 +13,8 @@ Vector<T>::Vector(const int size):
 
 template<typename T>
 Vector<T>::~Vector() {
-    data = nullptr;
+    data.reset();
+    sz = 0;
 }
 
 template<typename T>
