@@ -29,14 +29,24 @@ namespace {
         ASSERT_EQ(c.size(), 1);
     }
 
-    TEST(Vector, VectorEnds) {
+    TEST(Vector, VectorEdges) {
         const Vector test {1, 5, 9};
 
         const int* begin = test.begin();
-        const int* end = test.end();
 
         ASSERT_EQ(*begin, 1);
-        ASSERT_EQ(*end, 9);
+
+        // Hmm, an interesting case-study
+        //
+        // Learning new ways to think as I come up with
+        // case-studies
+        auto it = test.begin();
+        for (size_t i = 0; i < test.size(); ++i) {
+            ASSERT_NE(it, test.end()) << "Iterator should not be at end yet";
+            ++it;
+        }
+
+        ASSERT_EQ(it, test.end()) << "Iterator should now be at end (one past last element)";
     }
 
     TEST(Vector, VectorOperators) {

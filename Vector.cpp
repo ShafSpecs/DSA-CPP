@@ -45,7 +45,7 @@ int* Vector::begin() const {
 }
 
 int* Vector::end() const {
-    return this->data.get() + (this->sz - 1);
+    return this->data.get() + this->sz;
 }
 
 int &Vector::operator[](const int index) {
