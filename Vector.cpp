@@ -1,72 +1,83 @@
 #include <memory>
 #include "Vector.h"
 
-Vector::Vector(const int size):
+template<typename T>
+Vector<T>::Vector(const int size):
     sz(size),
-    data(std::make_unique<int[]>(size))
+    data(std::make_unique<T[]>(size))
 {
     for (int i = 0; i < sz; ++i) {
-        data[i] = 0;
+        data[i] = T();
     }
 }
 
-Vector::~Vector() {
+template<typename T>
+Vector<T>::~Vector() {
     data = nullptr;
 }
 
-Vector::Vector(const std::initializer_list<int> list):
+template<typename T>
+Vector<T>::Vector(const std::initializer_list<T> list):
     sz(static_cast<int>(list.size())),
-    data(std::make_unique<int[]>(list.size()))
+    data(std::make_unique<T[]>(list.size()))
 {
     std::copy(list.begin(), list.end(), data.get());
 }
 
-Vector::Vector(const Vector& other):
+template<typename T>
+Vector<T>::Vector(const Vector& other):
     sz(other.sz),
     data(std::make_unique<int[]>(other.sz))
 {
     std::copy(other.data.get(), other.data.get() + other.size(), data.get());
 }
 
-Vector::Vector(Vector&& other) noexcept:
+template<typename T>
+Vector<T>::Vector(Vector&& other) noexcept:
     sz(other.sz),
     data(std::move(other.data))
 {
     other.sz = 0;
 }
 
-
-int Vector::size() const {
+template<typename T>
+size_t Vector<T>::size() const {
     return this->sz;
 }
 
-int* Vector::begin() const {
+template<typename T>
+T* Vector<T>::begin() const {
     return this->data.get();
 }
 
-int* Vector::end() const {
+template<typename T>
+T* Vector<T>::end() const {
     return this->data.get() + this->sz;
 }
 
-int &Vector::operator[](const int index) {
+template<typename T>
+T &Vector<T>::operator[](const int index) {
     return this->data[index];
 }
 
-const int &Vector::operator[](const int index) const {
+template<typename T>
+const T &Vector<T>::operator[](const int index) const {
     return this->data[index];
 }
 
 // Btw, `Vector &other` and `Vector& other` are the same
 // (the same applies to `Vector &&other` and `Vector&& other`)
 // They are just different ways to write reference types.
-Vector &Vector::operator=(const Vector& other) {
+template<typename T>
+Vector<T> &Vector<T>::operator=(const Vector& other) {
     this->sz = other.sz;
     this->data = std::make_unique<int[]>(other.sz);
     std::copy(other.data.get(), other.data.get() + other.size(), this->data.get());
     return *this;
 }
 
-Vector &Vector::operator=(Vector&& other) noexcept {
+template<typename T>
+Vector<T> &Vector<T>::operator=(Vector&& other) noexcept {
     if (this != &other) { // prevent self-assignment & errors
         this->sz = other.sz;
         this->data = std::move(other.data);
@@ -75,7 +86,8 @@ Vector &Vector::operator=(Vector&& other) noexcept {
     return *this;
 }
 
-bool Vector::operator==(const Vector &other) const {
+template<typename T>
+bool Vector<T>::operator==(const Vector &other) const {
     if (this->size() != other.size()) {
         return false;
     }
@@ -89,7 +101,8 @@ bool Vector::operator==(const Vector &other) const {
     return true;
 }
 
-bool Vector::operator!=(const Vector &other) const {
+template<typename T>
+bool Vector<T>::operator!=(const Vector &other) const {
     if (this->size() != other.size()) {
         return true;
     }
