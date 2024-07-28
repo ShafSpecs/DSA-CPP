@@ -16,18 +16,21 @@ add_executable(DSA main.cpp
         Vector.cpp
         Vector.h
         Map.cpp
-        Map.h)
+        Map.h
+        BinaryTree.cpp)
 
 enable_testing()
 
 add_executable(
         vector_test
+        # test files
+        map_test.cpp
         vector_test.cpp
+        # source files
         Vector.cpp
         Vector.h
         Map.cpp
         Map.h
-        map_test.cpp
 )
 target_link_libraries(
         vector_test
