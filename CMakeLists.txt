@@ -17,15 +17,18 @@ add_executable(DSA main.cpp
         Vector.h
         Map.cpp
         Map.h
-        BinaryTree.cpp)
+        BinaryTree.cpp
+        Pair.cpp
+        Pair.h)
 
 enable_testing()
 
 add_executable(
-        vector_test
+        dsa_test
         # test files
         binary_tree_test.cpp
         map_test.cpp
+        pair_test.cpp
         vector_test.cpp
         # source files
         BinaryTree.cpp
@@ -33,11 +36,13 @@ add_executable(
         Vector.h
         Map.cpp
         Map.h
+        Pair.h
+        Pair.cpp
 )
 target_link_libraries(
-        vector_test
+        dsa_test
         GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(vector_test)
+gtest_discover_tests(dsa_test)
