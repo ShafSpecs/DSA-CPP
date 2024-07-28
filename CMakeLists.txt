@@ -24,9 +24,11 @@ enable_testing()
 add_executable(
         vector_test
         # test files
+        binary_tree_test.cpp
         map_test.cpp
         vector_test.cpp
         # source files
+        BinaryTree.cpp
         Vector.cpp
         Vector.h
         Map.cpp
