@@ -2,7 +2,6 @@
 #define MAP_H
 #include <memory>
 
-
 template<class T, class U>
 class Map {
 public:
@@ -25,6 +24,8 @@ private:
     // Ig, I could have used a pair here...
     std::unique_ptr<T[]> keys{};
     std::unique_ptr<U[]> values{};
+
+    int index_of(T key) const;
 };
 
 

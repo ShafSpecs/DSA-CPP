@@ -26,6 +26,22 @@ Map<T, U>::Map(std::initializer_list<std::pair<T, U>> list)
 }
 
 template<class T, class U>
+int Map<T, U>::index_of(T key) const {
+    auto key_arr = this->keys.get();
+
+    int index = -1;
+    for (int i = 0; i < _sz; ++i) {
+        if (key_arr[i] == key) {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}
+
+
+template<class T, class U>
 int Map<T, U>::size() const {
     return this->_sz;
 }
@@ -64,13 +80,7 @@ void Map<T, U>::erase(T key) {
     // This is super-inefficient
     auto key_arr = this->keys.get();
 
-    int index = -1;
-    for (int i = 0; i < _sz; ++i) {
-        if (key_arr[i] == key) {
-            index = i;
-            break;
-        }
-    }
+    const int index = index_of(key);
 
     if (index == -1) return;
 
@@ -99,4 +109,44 @@ bool Map<T, U>::operator==(const Map& other) const {
     }
 
     return true;
+}
+
+template<class T, class U>
+bool Map<T, U>::operator!=(const Map& other) const {
+    if (this->_sz == other._sz) return false;
+
+    const auto this_map_keys = this->keys.get();
+    const auto this_map_values = this->values.get();
+    const auto other_map_keys = other.keys.get();
+    const auto other_map_values = other.values.get();
+
+    for (int i = 0; i < _sz; ++i) {
+        if (this_map_keys[i] == other_map_keys[i]) return false;
+        if (this_map_values[i] == other_map_values[i]) return false;
+    }
+
+    return true;
+}
+
+template<class T, class U>
+U& Map<T, U>::operator[](T key) {
+    auto index_of_key = this->index_of(key);
+
+    if (index_of_key == -1) {
+        // This works because Map is in a linear, simple,
+        // unsorted format.
+        index_of_key = _sz;
+        insert(key, U());
+    };
+
+    return values[index_of_key];
+}
+
+template<class T, class U>
+const U& Map<T, U>::operator[](T key) const {
+    const auto index_of_key = this->index_of(key);
+
+    if (index_of_key == -1) throw std::out_of_range("Key is not found");
+
+    return values[index_of_key];
 }

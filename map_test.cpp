@@ -60,11 +60,20 @@ namespace {
 
     TEST(Map, MapOperators) {
         Map<int, char> a = {{1, 's'}, {2, 'x'}, {7, 'p'}};
-        Map<int, char> b = {{1, 's'}, {2, 'x'}, {7, 'p'}};
+        const Map<int, char> b = {{1, 's'}, {2, 'x'}, {7, 'p'}};
         Map<int, char> c = {};
 
         ASSERT_EQ(a, b);
+        ASSERT_NE(b, c);
 
-        // Test still unfinished...
+        ASSERT_EQ(a[1], 's');
+        ASSERT_EQ(b[2], 'x') << "[] operator works well on immutable Map as well";
+
+        ASSERT_EQ(c[5], char()) << "Should return a mutable default value of value type when "
+                                   "key is not found";
+
+        c[5] = 'a';
+        ASSERT_EQ(c[5], 'a');
+        ASSERT_GT(c.size(), 0);
     }
 } // namespace
