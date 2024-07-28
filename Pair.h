@@ -10,6 +10,8 @@ public:
     T first;
     U second;
 
+    // Return `void` is T & U are the same (e.g <int, int>) and return
+    // a new `Pair` if they different.
     auto swap() -> std::conditional_t<std::is_same_v<T, U>, void, Pair<U, T>>;
 };
 
