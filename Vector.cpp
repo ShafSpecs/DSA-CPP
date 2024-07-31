@@ -129,6 +129,14 @@ void Vector<T>::push_back(T new_item) {
     ++_sz;
 }
 
+template<class T>
+void Vector<T>::pop_back() {
+    if (_sz == 0) return; // throw?
+
+    data[_sz - 1] = T();
+    --_sz;
+}
+
 template<typename T>
 T &Vector<T>::operator[](const int index) {
     return this->data[index];

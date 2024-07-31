@@ -31,13 +31,15 @@ public:
     [[nodiscard]] T* end() const;
     [[nodiscard]] T front() const;
     [[nodiscard]] T back() const;
-    [[nodiscard]] T at(int index) const;
     [[nodiscard]] bool empty() const;
     [[nodiscard]] int capacity() const;
+
+    T at(int index) const;
 
     void reserve(int newalloc);
     void resize(int new_size);
     void push_back(T new_item);
+    void pop_back();
 
     // Provide (mutable) support for Vector[]
     T& operator[](int index);

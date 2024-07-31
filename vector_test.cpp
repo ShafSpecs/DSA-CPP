@@ -206,4 +206,16 @@ namespace {
         ASSERT_EQ(v.capacity(), 4);
         ASSERT_EQ(v.size(), 4);
     }
+
+    TEST(Vector, VectorPopBack) {
+        Vector v = {2, 3, 4};
+
+        ASSERT_EQ(v.capacity(), 3);
+        ASSERT_EQ(v.size(), 3);
+
+        v.pop_back();
+
+        ASSERT_EQ(v.capacity(), 3);
+        ASSERT_EQ(v.size(), 2) << "Popping the last item doesn't reduce capacity";
+    }
 } // namespace
