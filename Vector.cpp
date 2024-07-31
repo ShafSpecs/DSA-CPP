@@ -83,6 +83,7 @@ T Vector<T>::back() const {
 
 template<class T>
 T Vector<T>::at(const int index) const {
+    if (index >= _sz) throw std::out_of_range("Attempted to access an item out of bounds!");
     return data[index];
 }
 

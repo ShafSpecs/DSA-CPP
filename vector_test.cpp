@@ -145,6 +145,9 @@ namespace {
 
         ASSERT_EQ(v.at(1), 2.1) << "A less sophisticated `[]` method";
         ASSERT_EQ(v.at(3), 5.6);
+
+        ASSERT_THROW(v.at(5), std::out_of_range) << "`at` throws when you attempt to access an element "
+                                                    "out of bounds";
     }
 
     TEST(Vector, VectorReserve) {
