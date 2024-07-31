@@ -13,6 +13,7 @@
 template<class T>
 class Vector {
 public:
+    Vector();
     explicit Vector(int size);
     // allows for Vector _ {...}
     Vector(std::initializer_list<T> list);
@@ -28,6 +29,15 @@ public:
     [[nodiscard]] size_t size() const;
     [[nodiscard]] T* begin() const;
     [[nodiscard]] T* end() const;
+    [[nodiscard]] T front() const;
+    [[nodiscard]] T back() const;
+    [[nodiscard]] T at(int index) const;
+    [[nodiscard]] bool empty() const;
+    [[nodiscard]] int capacity() const;
+
+    void reserve(int newalloc);
+    void resize(int new_size);
+    void push_back(T new_item);
 
     // Provide (mutable) support for Vector[]
     T& operator[](int index);
@@ -40,8 +50,10 @@ public:
     bool operator==(const Vector& other) const;
     bool operator!=(const Vector& other) const;
 private:
-    int sz{};
+    const int INCREASE_FACTOR = 2; // Idk, honestly...
+    int _sz{};
     std::unique_ptr<T[]> data{};
+    int _space{};
 };
 
 

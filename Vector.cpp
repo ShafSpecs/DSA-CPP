@@ -2,11 +2,18 @@
 #include "Vector.h"
 
 template<typename T>
-Vector<T>::Vector(const int size):
-    sz(size),
-    data(std::make_unique<T[]>(size))
+Vector<T>::Vector():
+    data(nullptr)
 {
-    for (int i = 0; i < sz; ++i) {
+}
+
+template<typename T>
+Vector<T>::Vector(const int size):
+    _sz(size),
+    data(std::make_unique<T[]>(size)),
+    _space(size)
+{
+    for (int i = 0; i < _sz; ++i) {
         data[i] = T();
     }
 }
@@ -14,36 +21,39 @@ Vector<T>::Vector(const int size):
 template<typename T>
 Vector<T>::~Vector() {
     data.reset();
-    sz = 0;
+    _sz = _space = 0;
 }
 
 template<typename T>
 Vector<T>::Vector(const std::initializer_list<T> list):
-    sz(static_cast<int>(list.size())),
-    data(std::make_unique<T[]>(list.size()))
+    _sz(static_cast<int>(list.size())),
+    data(std::make_unique<T[]>(list.size())),
+    _space(list.size())
 {
     std::copy(list.begin(), list.end(), data.get());
 }
 
 template<typename T>
 Vector<T>::Vector(const Vector& other):
-    sz(other.sz),
-    data(std::make_unique<int[]>(other.sz))
+    _sz(other._sz),
+    data(std::make_unique<int[]>(other._sz)),
+    _space(other._space)
 {
-    std::copy(other.data.get(), other.data.get() + other.size(), data.get());
+    std::copy(other.data.get(), other.data.get() + other._sz, data.get());
 }
 
 template<typename T>
 Vector<T>::Vector(Vector&& other) noexcept:
-    sz(other.sz),
-    data(std::move(other.data))
+    _sz(other._sz),
+    data(std::move(other.data)),
+    _space(other._sz)
 {
-    other.sz = 0;
+    other._sz = other._space = 0;
 }
 
 template<typename T>
 size_t Vector<T>::size() const {
-    return this->sz;
+    return this->_sz;
 }
 
 template<typename T>
@@ -53,7 +63,69 @@ T* Vector<T>::begin() const {
 
 template<typename T>
 T* Vector<T>::end() const {
-    return this->data.get() + this->sz;
+    return this->data.get() + this->_sz;
+}
+
+template<class T>
+bool Vector<T>::empty() const {
+    return _sz == 0;
+}
+
+template<class T>
+T Vector<T>::front() const {
+    return data[0];
+}
+
+template<class T>
+T Vector<T>::back() const {
+    return data[_sz - 1];
+}
+
+template<class T>
+T Vector<T>::at(const int index) const {
+    return data[index];
+}
+
+template<class T>
+int Vector<T>::capacity() const {
+    return _space;
+}
+
+template<class T>
+void Vector<T>::reserve(int newalloc) {
+    if (newalloc <= _space) return;
+
+    auto new_data = std::make_unique<T[]>(newalloc);
+    for (int i = 0; i < _sz; ++i) {
+        new_data[i] = std::move(data[i]);
+    }
+
+    data.reset();
+    data = std::move(new_data);
+    _space = newalloc;
+}
+
+template<class T>
+void Vector<T>::resize(const int new_size) {
+    if (new_size <= _sz) return;
+
+    reserve(new_size);
+
+    for(int i = _sz; i < new_size; ++i) {
+        data[i] = T();
+    }
+
+    _sz = new_size;
+}
+
+template<class T>
+void Vector<T>::push_back(T new_item) {
+    if (_space == 0) reserve(8);
+
+    if (_space == _sz) reserve(INCREASE_FACTOR * _space);
+
+    data[_sz] = new_item;
+    ++_sz;
 }
 
 template<typename T>
@@ -71,8 +143,9 @@ const T &Vector<T>::operator[](const int index) const {
 // They are just different ways to write reference types.
 template<typename T>
 Vector<T> &Vector<T>::operator=(const Vector& other) {
-    this->sz = other.sz;
-    this->data = std::make_unique<int[]>(other.sz);
+    this->_sz = other._sz;
+    if (this->_space < other._sz) this->_space = other._sz;
+    this->data = std::make_unique<int[]>(this->_space);
     std::copy(other.data.get(), other.data.get() + other.size(), this->data.get());
     return *this;
 }
@@ -80,9 +153,9 @@ Vector<T> &Vector<T>::operator=(const Vector& other) {
 template<typename T>
 Vector<T> &Vector<T>::operator=(Vector&& other) noexcept {
     if (this != &other) { // prevent self-assignment & errors
-        this->sz = other.sz;
+        this->_sz = this->_space = other._sz;
         this->data = std::move(other.data);
-        other.sz = 0;
+        other._sz = other._space = 0;
     }
     return *this;
 }
