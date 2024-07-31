@@ -40,6 +40,9 @@ public:
     void resize(int new_size);
     void push_back(T new_item);
     void pop_back();
+    void clear();
+    void erase();
+    void shrink_to_fit();
 
     // Provide (mutable) support for Vector[]
     T& operator[](int index);

@@ -218,4 +218,37 @@ namespace {
         ASSERT_EQ(v.capacity(), 3);
         ASSERT_EQ(v.size(), 2) << "Popping the last item doesn't reduce capacity";
     }
+
+    TEST(Vector, VectorEmptying) {
+        Vector v = {1, 2, 3};
+
+        v.clear();
+
+        ASSERT_EQ(v.size(), 0);
+        ASSERT_EQ(v.capacity(), 3) << "`clear` clears all elements, but still leaves reserved space";
+
+        v.push_back(3);
+        v.push_back(7);
+
+        ASSERT_EQ(v.size(), 2);
+        ASSERT_EQ(v.capacity(), 3);
+
+        v.erase();
+
+        ASSERT_EQ(v.capacity(), 0);
+        ASSERT_EQ(v.size(), 0) << "`erase` completely clears and nullifies a vector, it is similar to invoking"
+                                  "`Vector()` constructor";
+    }
+
+    TEST(Vector, VectorShrinking) {
+        Vector m = {2.1, 2.3};
+        m.reserve(10);
+
+        ASSERT_EQ(m.capacity(), 10);
+
+        m.shrink_to_fit();
+
+        ASSERT_EQ(m.size(), 2);
+        ASSERT_EQ(m.capacity(), 2) << "`shrink_to_fit` frees up memory by releasing the unused, reserved space";
+    }
 } // namespace

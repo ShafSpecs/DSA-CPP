@@ -137,6 +137,31 @@ void Vector<T>::pop_back() {
     --_sz;
 }
 
+template<class T>
+void Vector<T>::clear() {
+    this->data = std::make_unique<T[]>(_space);
+    this->_sz = 0;
+}
+
+template<class T>
+void Vector<T>::erase() {
+    this->data.reset();
+    this->_sz = this->_space = 0;
+}
+
+template<class T>
+void Vector<T>::shrink_to_fit() {
+    this->_space = this->_sz;
+
+    auto resized_data = std::make_unique<T[]>(this->_sz);
+    for (int i = 0; i < _sz; ++i) {
+        resized_data[i] = std::move(data[i]);
+    }
+
+    data.reset();
+    data = std::move(resized_data);
+}
+
 template<typename T>
 T &Vector<T>::operator[](const int index) {
     return this->data[index];
