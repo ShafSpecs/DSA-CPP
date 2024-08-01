@@ -1,11 +1,13 @@
 #ifndef PAIR_H
 #define PAIR_H
 #include <tuple>
+#include <list>
 
 template<class T, class U>
 class Pair {
 public:
     explicit Pair(std::tuple<T, U> pair);
+    Pair(T first, U second);
 
     T first;
     U second;
