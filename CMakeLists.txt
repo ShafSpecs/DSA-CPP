@@ -19,7 +19,9 @@ add_executable(DSA main.cpp
         Map.h
         BinaryTree.cpp
         Pair.cpp
-        Pair.h)
+        Pair.h
+        HashTable.cpp
+        HashTable.h)
 
 enable_testing()
 
@@ -27,11 +29,14 @@ add_executable(
         dsa_test
         # test files
         binary_tree_test.cpp
+        hash_table_test.cpp
         map_test.cpp
         pair_test.cpp
         vector_test.cpp
         # source files
         BinaryTree.cpp
+        HashTable.cpp
+        HashTable.h
         Vector.cpp
         Vector.h
         Map.cpp
